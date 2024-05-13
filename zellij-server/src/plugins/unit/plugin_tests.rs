@@ -5,7 +5,7 @@ use insta::assert_snapshot;
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 use tempfile::tempdir;
-use wasmer::Store;
+use wasmer::Engine;
 use zellij_utils::data::{Event, Key, PermissionStatus, PermissionType, PluginCapabilities};
 use zellij_utils::errors::ErrorContext;
 use zellij_utils::input::layout::{
@@ -245,7 +245,7 @@ fn create_plugin_thread(
         None,
     )
     .should_silently_fail();
-    let store = Store::new(wasmer::Singlepass::default());
+    let engine: Engine = wasmer::Singlepass::default().into();
     let data_dir = PathBuf::from(tempdir().unwrap().path());
     let default_shell = PathBuf::from(".");
     let plugin_capabilities = PluginCapabilities::default();
@@ -268,7 +268,7 @@ fn create_plugin_thread(
             set_var("ZELLIJ_SESSION_NAME", "zellij-test");
             plugin_thread_main(
                 plugin_bus,
-                store,
+                engine,
                 data_dir,
                 Box::new(Layout::default()),
                 None,
@@ -335,7 +335,7 @@ fn create_plugin_thread_with_server_receiver(
         None,
     )
     .should_silently_fail();
-    let store = Store::new(wasmer::Singlepass::default());
+    let engine: Engine = wasmer::Singlepass::default().into();
     let data_dir = PathBuf::from(tempdir().unwrap().path());
     let default_shell = PathBuf::from(".");
     let plugin_capabilities = PluginCapabilities::default();
@@ -347,7 +347,7 @@ fn create_plugin_thread_with_server_receiver(
             set_var("ZELLIJ_SESSION_NAME", "zellij-test");
             plugin_thread_main(
                 plugin_bus,
-                store,
+                engine,
                 data_dir,
                 Box::new(Layout::default()),
                 None,
@@ -420,7 +420,7 @@ fn create_plugin_thread_with_pty_receiver(
         None,
     )
     .should_silently_fail();
-    let store = Store::new(wasmer::Singlepass::default());
+    let engine: Engine = wasmer::Singlepass::default().into();
     let data_dir = PathBuf::from(tempdir().unwrap().path());
     let default_shell = PathBuf::from(".");
     let plugin_capabilities = PluginCapabilities::default();
@@ -432,7 +432,7 @@ fn create_plugin_thread_with_pty_receiver(
             set_var("ZELLIJ_SESSION_NAME", "zellij-test");
             plugin_thread_main(
                 plugin_bus,
-                store,
+                engine,
                 data_dir,
                 Box::new(Layout::default()),
                 None,
@@ -500,7 +500,7 @@ fn create_plugin_thread_with_background_jobs_receiver(
         None,
     )
     .should_silently_fail();
-    let store = Store::new(wasmer::Singlepass::default());
+    let engine: Engine = wasmer::Singlepass::default().into();
     let data_dir = PathBuf::from(tempdir().unwrap().path());
     let default_shell = PathBuf::from(".");
     let plugin_capabilities = PluginCapabilities::default();
@@ -512,7 +512,7 @@ fn create_plugin_thread_with_background_jobs_receiver(
             set_var("ZELLIJ_SESSION_NAME", "zellij-test");
             plugin_thread_main(
                 plugin_bus,
-                store,
+                engine,
                 data_dir,
                 Box::new(Layout::default()),
                 None,
